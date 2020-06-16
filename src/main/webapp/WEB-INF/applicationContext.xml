@@ -55,6 +55,9 @@
 		base-package="tm.repository" />
 	<context:component-scan
 		base-package="tm.controller" />
+	<context:component-scan base-package="tm.dto" />
+	<context:component-scan base-package="tm.service.impl" />
+	<context:component-scan base-package="tm.configuration" />
 
 	<tx:annotation-driven
 		transaction-manager="transactionManager" />

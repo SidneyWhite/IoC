@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<security:global-method-security
+		pre-post-annotations="enabled" />
+	<security:http use-expressions="true">
+		<!-- <security:intercept-url pattern="/appointments/add" access="hasRole('ROLE_ADMIN')" 
+			/> <security:intercept-url pattern="/appointment" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" 
+			/> -->
+
+		<!-- -->
+		<security:form-login login-page="/login"
+			default-target-url="/welcome" always-use-default-target="true"
+			authentication-failure-url="/loginfailed" />
+
+		<security:logout logout-success-url="/logout"
+			delete-cookies="JSESSIONID" logout-url="/doLogout" />
+
+		<security:remember-me
+			data-source-ref="dataSource" token-validity-seconds="86400"
+			remember-me-parameter="keepMe" />
+	</security:http>
+
+<!-- 	<security:authentication-manager
+		alias="authenticationManager">
+		<security:authentication-provider>
+			<security:password-encoder
+				ref="passwordEncoder" />
+			<security:jdbc-user-service
+				data-source-ref="dataSource"
+				users-by-username-query="select userName,password,enabled from user where userName=?"
+				authorities-by-username-query="select u1.userName, u2.name from user u1, role u2, user_role u3,
+				                                                     where u1.id = u3.user_id and u2.id = u3.roles_id and u1.username =?" />
+		</security:authentication-provider>
+	</security:authentication-manager> -->
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+	</bean>
+</beans>
