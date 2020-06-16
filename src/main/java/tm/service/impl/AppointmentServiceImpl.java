@@ -23,8 +23,8 @@ public class AppointmentServiceImpl implements AppointmentService{
 	
 
 	@Override
-	public void createAppointment() {
-		appointmentRepo.save(new Appointment(new Date(), "111"));
+	public void createAppointment(Appointment appointment) {
+		appointmentRepo.save(appointment);
 	}
 
 	@Override

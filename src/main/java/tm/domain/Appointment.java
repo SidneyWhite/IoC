@@ -8,6 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Appointment {
@@ -16,9 +22,13 @@ public class Appointment {
 	@GeneratedValue
 	private int id;
 	
+	
 	@Temporal(TemporalType.DATE)
+	@NotNull(message = "Date is required")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date date;
 	
+	@NotEmpty(message = "Room number is required")
 	private String room_no;
 	
 	Appointment(){}
