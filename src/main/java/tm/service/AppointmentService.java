@@ -7,7 +7,7 @@ import tm.domain.Appointment;
 public interface AppointmentService {
 	
 	
-	public void createAppointment();
+	public void createAppointment(Appointment appointment);
 	
 	public Appointment getAppointment(int id);
 	
