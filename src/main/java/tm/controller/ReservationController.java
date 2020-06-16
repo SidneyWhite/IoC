@@ -3,6 +3,7 @@ package tm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tm.domain.Appointment;
 import tm.domain.Reservation;
+import tm.service.AppointmentService;
 import tm.service.ReservationService;
 
 @RestController
@@ -21,6 +24,9 @@ public class ReservationController {
 
 	@Autowired
 	ReservationService reservationService;
+	
+	@Autowired
+	AppointmentService appointmentService;
 
 	@PostMapping()
 	public void createResevation(@RequestBody Reservation reservation) {
@@ -55,6 +61,13 @@ public class ReservationController {
 	@DeleteMapping("/{reservationId}")
 	public void deleteReservation(@PathVariable int reservationId) {
 		reservationService.delete(reservationId);
+	}
+	
+	
+	@RequestMapping(value = "/makereservation/{appointmentId}")
+	public void makeReservation(@PathVariable("appointmentId") int appointmentId, Model model) {
+		
+		reservationService.makeReservation(appointmentId);
 	}
 
 }

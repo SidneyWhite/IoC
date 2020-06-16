@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import tm.domain.Appointment;
 import tm.domain.Reservation;
+import tm.enums.ReservationStatus;
 import tm.repository.AppointmentRepository;
 import tm.repository.ReservationRepository;
 import tm.service.ReservationService;
@@ -20,6 +21,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	ReservationRepository reservationRepository;
+	
 
 //	@Autowired
 //	Notification notif;
@@ -56,5 +58,25 @@ public class ReservationServiceImpl implements ReservationService {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void makeReservation(int appointmentId) {
+		
+		Appointment appointment = appointmentRepository.findOne(appointmentId);
+		
+		Reservation reservation = new Reservation();
+		reservation.setAppointment(appointment);
+		reservation.setIsReminderSent(0);
+		reservation.setStatus(ReservationStatus.PENDING);
+		reservation.setUserId(1);
+		reservation.setReservationDate(appointment.getDate());
+		
+		reservationRepository.save(reservation);
+		appointmentRepository.save(appointment);
+		System.out.println("saved");
+		
+	}
+	
+	
 
 }
