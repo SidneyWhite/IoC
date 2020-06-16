@@ -16,6 +16,8 @@ public interface ReservationService {
 	public Reservation update(Reservation reservation);
 
 	public void delete(int ReservationId);
+	
+	public void makeReservation(int appointmentId);
 
 	public List<Reservation> getReservations();
 }
