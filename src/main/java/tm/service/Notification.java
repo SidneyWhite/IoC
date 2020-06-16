@@ -22,14 +22,13 @@ import tm.enums.ENotificationStatus;
 import tm.repository.NotificationRepository;
 import tm.repository.ReservationRepository;
 
-@Service
 public class Notification {
 
-	@Value("${schedule.notification.reminder.minutes}")
+//	@Value("${schedule.notification.reminder.minutes}")
 	private long reminderMinutesBeforeAppointment;
 
-	@Autowired
-	private JavaMailSender mailSender;
+//	@Autowired
+//	private JavaMailSender mailSender;
 
 	@Autowired
 	private NotificationRepository repository;
@@ -37,7 +36,7 @@ public class Notification {
 	@Autowired
 	private ReservationRepository reservRepo;
 
-	@Scheduled(fixedDelayString = "${sync-job.delay.milliseconds.fixed}", initialDelayString = "${sync-job.delay.milliseconds.initial}")
+//	@Scheduled(fixedDelayString = "${sync-job.delay.milliseconds.fixed}", initialDelayString = "${sync-job.delay.milliseconds.initial}")
 	public void schSendEmail() {
 
 		List<EmailNotification> lstEmail = repository.findByStatus(ENotificationStatus.NEW);
@@ -50,7 +49,7 @@ public class Notification {
 		System.out.println("working schedule schSendEmail: " + LocalDateTime.now());
 	}
 
-	@Scheduled(fixedDelayString = "${sync-job.delay.milliseconds.fixed}", initialDelayString = "${sync-job.delay.milliseconds.initial}")
+//	@Scheduled(fixedDelayString = "${sync-job.delay.milliseconds.fixed}", initialDelayString = "${sync-job.delay.milliseconds.initial}")
 	public void schReminder() {
 
 		Calendar date = Calendar.getInstance();
@@ -79,7 +78,7 @@ public class Notification {
 			message.setTo(email.getRecipientEmail());
 			message.setSubject(email.getSubject());
 			message.setText(email.getContent());
-			mailSender.send(message);
+//			mailSender.send(message);
 
 			email.setStatus(ENotificationStatus.SUCCEED);
 			updateNotification(email);
