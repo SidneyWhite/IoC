@@ -23,9 +23,6 @@ public class Reservation {
 	@GeneratedValue
 	private int id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date reservationDate;
-
 	@Enumerated(EnumType.STRING)
 	private ReservationStatus status;
 
@@ -45,7 +42,6 @@ public class Reservation {
 	private Integer appointmentId;
 
 	public Reservation(Date reservationDate, Integer userId, Integer appointmentId) {
-		this.reservationDate = reservationDate;
 		this.userId = userId;
 		this.appointmentId = appointmentId;
 		this.isReminderSent = 0;
@@ -61,14 +57,6 @@ public class Reservation {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Date getReservationDate() {
-		return reservationDate;
-	}
-
-	public void setReservationDate(Date reservationDate) {
-		this.reservationDate = reservationDate;
 	}
 
 	public ReservationStatus getStatus() {
@@ -123,7 +111,7 @@ public class Reservation {
 
 	@Override
 	public String toString() {
-		return "Reservation [id=" + id + ", reservationDate=" + reservationDate + ", status=" + status + "]";
+		return "Reservation [id=" + id + ", status=" + status + "]";
 	}
 
 }

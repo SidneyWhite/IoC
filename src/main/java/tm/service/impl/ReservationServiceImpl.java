@@ -1,14 +1,12 @@
 package tm.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tm.domain.Appointment;
 import tm.domain.Reservation;
 import tm.repository.AppointmentRepository;
 import tm.repository.ReservationRepository;
@@ -55,6 +53,11 @@ public class ReservationServiceImpl implements ReservationService {
 	public void delete(int ReservationId) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<Reservation> getReservations() {
+		return (List<Reservation>) reservationRepository.findAll();
 	}
 
 }

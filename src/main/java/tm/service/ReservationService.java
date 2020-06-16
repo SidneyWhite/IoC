@@ -2,6 +2,7 @@ package tm.service;
 
 import java.util.List;
 
+import tm.domain.Appointment;
 import tm.domain.Reservation;
 
 public interface ReservationService {
@@ -16,4 +17,5 @@ public interface ReservationService {
 
 	public void delete(int ReservationId);
 
+	public List<Reservation> getReservations();
 }
