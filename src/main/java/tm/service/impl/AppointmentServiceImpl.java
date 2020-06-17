@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tm.domain.Appointment;
+import tm.domain.Reservation;
 import tm.repository.AppointmentRepository;
+import tm.repository.ReservationRepository;
 import tm.service.AppointmentService;
 
 
@@ -20,6 +22,8 @@ public class AppointmentServiceImpl implements AppointmentService{
 	@Autowired
 	AppointmentRepository appointmentRepo;
 	
+	@Autowired
+	ReservationRepository reservationRepo;
 	
 
 	@Override
@@ -35,6 +39,11 @@ public class AppointmentServiceImpl implements AppointmentService{
 	@Override
 	public List<Appointment> getAppointments() {
 		return (List<Appointment>) appointmentRepo.findAll();
+	}
+
+	@Override
+	public List<Reservation> getReservations(int appintmentId) {
+		return (List<Reservation>) reservationRepo.findReservationByAppointmentId(appintmentId);
 	}
 
 }
