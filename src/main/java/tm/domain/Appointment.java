@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -31,11 +32,23 @@ public class Appointment {
 	@NotEmpty(message = "Room number is required")
 	private String room_no;
 	
+	
+	@ManyToOne
+	User user;
+	
 	Appointment(){}
 	
 	public Appointment(Date date, String room_no) {
 		this.date = date;
 		this.room_no = room_no;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public int getId() {
