@@ -60,6 +60,7 @@
                </c:forEach>
             </tbody>
          </table>
+         <div id="formInput" style="display:none"></div>
       </div>
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
       <script
@@ -86,6 +87,8 @@
                      	 $('#reservationstatus'+appId).addClass("btn btn-warning");
                          $('#reservationstatus'+appId).html("PENDING");
                          $('#reservationstatus'+appId).prop('disabled', true);
+
+                         
                     	}                    
                  },
                  error: (err) => {
@@ -104,6 +107,14 @@
 				dataType: 'json',
 				success: (data)=>{
 					console.log(data);
+					
+					$("#formInput").append('<H3 align="center"> Reservation list <H3>');
+		            $('#formInput').append("<H4 align='center'>Reservation id:  " + data[0].id + "</h4>");
+		            $('#formInput').append("<H4 align='center'>status: " + data[0].status + "</h4>");
+
+		            var element = document.getElementById("formInput");
+		            element.style.display = 'block';
+					
 					},
 				error: (error)=>{
 					console.log(error);

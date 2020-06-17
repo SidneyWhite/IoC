@@ -13,3 +13,4 @@ INSERT INTO User_Role (User_id, roles_id) VALUES ('2', '2');
 
 INSERT INTO User(id,email,firstName, lastName, password, userName) VALUES ('3', 'checker@gmail.com', 'checker', 'checker', '123', 'checker');
 INSERT INTO User_Role (User_id, roles_id) VALUES ('3', '1');
+

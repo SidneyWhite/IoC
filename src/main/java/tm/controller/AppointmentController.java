@@ -9,6 +9,8 @@ import java.util.Locale;
 
 import javax.validation.Valid;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import tm.domain.Appointment;
 import tm.domain.Reservation;
+import tm.dto.ReservationListAjax;
 import tm.service.AppointmentService;
 import tm.service.impl.UserService;
 
@@ -78,31 +81,32 @@ public class AppointmentController {
 		return "redirect:/appointments";
 	}
 	
-//	@RequestMapping(value = "/getreservations/{appointmentId}")
-//	public ResponseEntity<String> getReservation(@PathVariable("appointmentId") int appId, Model model){
-//		
-//		List<Reservation> reservationList= appointmentService.getReservations(appId);
-//		
-//		final HttpHeaders httpHeaders= new HttpHeaders();
-//	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//	    return new ResponseEntity<String>("{\"status\":\"success\"}", httpHeaders, HttpStatus.OK);
-//	}
-	
 	@RequestMapping(value = "/getreservations/{appointmentId}")
 	public ResponseEntity<String> getReservation(@PathVariable("appointmentId") int appId, Model model){
-		List<Reservation> reservationList= appointmentService.getReservations(appId);
 		
-//		return reservationList;
+		List<Reservation> reservationList = appointmentService.getReservations(appId);
 		
+		JSONArray jsonArr = new JSONArray();
+		for(Reservation reservation : reservationList) {
+			JSONObject r = new JSONObject();
+			r.put("isReminderSent", reservation.getIsReminderSent());
+			r.put("appointment", reservation.getAppointment());
+			r.put("id", reservation.getId());
+			r.put("status", reservation.getStatus());
+			
+			jsonArr.put(r);
+		}
 		
+		System.out.println(jsonArr.toString());
 		
 		final HttpHeaders httpHeaders= new HttpHeaders();
 	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-	    return new ResponseEntity<String>("{\"status\":\"success\"}", httpHeaders, HttpStatus.OK);
+	    return new ResponseEntity<String>(jsonArr.toString(), httpHeaders, HttpStatus.OK);
+		
 	}
 	
 	
-	
+		
 	
 	
 	
