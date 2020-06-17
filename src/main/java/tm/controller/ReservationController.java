@@ -40,6 +40,13 @@ public class ReservationController {
 		return "reservation";
 	}
 
+	@RequestMapping(value = "/byAppointmentId/{appointmentId}", method = RequestMethod.GET)
+	public String getReservationsByAppointment(@PathVariable("appointmentId") int appointmentId, Model model) {
+		List<Reservation> reservations = reservationService.getReservationsByAppointmentId(appointmentId);
+		model.addAttribute("reservations", reservations);
+		return "reservation";
+	}
+
 	@RequestMapping(value = "/makereservation/{appointmentId}", produces = "application/json")
 	public ResponseEntity<String> makeReservation(@PathVariable("appointmentId") int appointmentId, Model model) {
 
@@ -52,10 +59,12 @@ public class ReservationController {
 	}
 
 	@RequestMapping(value = "/acceptreservation/{reservationId}")
-	public void acceptReservation(@PathVariable("reservationId") int reservationId, Model model) {
+	public String acceptReservation(@PathVariable("reservationId") int reservationId, Model model) {
 
 		Reservation res = reservationService.findById(reservationId);
 		reservationService.accept(res);
+
+		return "redirect:/reservations/byAppointmentId/" + reservationId;
 	}
 
 	@RequestMapping(value = "/deletereservation/{reservationId}")

@@ -85,7 +85,7 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public List<Reservation> getReservationsByAppointmentId(Integer appointmentId) {
-		return (List<Reservation>) reservationRepository.findByUserId(appointmentId);
+		return (List<Reservation>) reservationRepository.findByAppointmentId(appointmentId);
 	}
 
 }

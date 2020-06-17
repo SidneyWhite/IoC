@@ -36,6 +36,7 @@
 						<td>${reservation.appointment.room_no}</td>
 						<td>${reservation.status}</td>
 						<td>
+					    <c:if test = "${reservation.status == 'PENDING'}">
 							<security:authorize access="hasRole('ROLE_CHECKER')">
 								<button class="btn btn-info" type="button"
 									value="${reservation.id}" onClick="acceptReservation(this)">accept</button>
@@ -45,6 +46,7 @@
 									value="${reservation.id}" onClick="deleteReservation(this)">delete</button>
 
 							</security:authorize>
+					    </c:if>
 						</td>
 					</tr>
 				</c:forEach>
@@ -71,6 +73,7 @@
                 success: (data) => {
                     console.log(data);
                     alert("success");
+                    location.reload();
                 },
                 error: () => {
                     alert("error");

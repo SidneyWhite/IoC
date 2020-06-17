@@ -79,10 +79,11 @@ public class Reservation {
 
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
+		this.appointmentId = appointment.getId();
 	}
 
 	public Integer getAppointmentId() {
-		return appointmentId;
+		return appointment.getId();
 	}
 
 	public void setAppointmentId(Integer appointmentId) {
