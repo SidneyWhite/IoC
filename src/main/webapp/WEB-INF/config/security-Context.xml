@@ -29,6 +29,10 @@
 			remember-me-parameter="keepMe" />
 	</security:http>
 
+	<security:authentication-manager>
+	    <security:authentication-provider ref="authProvider" />
+	</security:authentication-manager>
+
 <!-- 	<security:authentication-manager
 		alias="authenticationManager">
 		<security:authentication-provider>

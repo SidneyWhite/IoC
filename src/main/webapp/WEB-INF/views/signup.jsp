@@ -71,7 +71,7 @@
 								<label class="control-label col-lg-3" for="roleId">Roles</label>
 								<div class="col-lg-9">
 									<div class="form:input-prepend">
-										<form:select id="roleId" path="roleId" class="form-control">
+										<form:select id="roleId" path="roleId" class="form-control" required="required">
 											<form:options items="${roles}" />
 										</form:select>
 									</div>

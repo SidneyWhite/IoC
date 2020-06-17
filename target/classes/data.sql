@@ -1,6 +1,6 @@
 SET foreign_key_checks = 0;
 
-INSERT INTO User(id,email,firstName, lastName, password, userName) VALUES ('1', 'eerdene@miu.edu', 'admin', 'admin', '123', 'admin');
+INSERT INTO User(id,email,firstName, lastName, password, userName) VALUES ('1', 'eerdene@miu.edu', 'admin', 'admin', '$2a$10$S/wlXEo/APzf.Sn1cO2p4.V12EJmaw.uzrHelMvkpuahjmHWnSafe', 'admin');
 
 INSERT INTO Role(id, name) VALUES ('1','ROLE_CHECKER');
 INSERT INTO Role (id, name ) VALUES ('2', 'ROLE_STUDENT');

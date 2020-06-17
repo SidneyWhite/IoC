@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +35,9 @@ public class UserController {
 
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@RequestMapping(value = { "/signup" }, method = RequestMethod.GET)
 	public String signUp(@ModelAttribute("newUser") UserDto userDto, Model model) {
@@ -50,22 +54,31 @@ public class UserController {
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String processSignup(@Valid @ModelAttribute("newUser") UserDto userDto, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes, Model model) {
 
-		if(!userDto.getPassword().equals(userDto.getVerifyPassword())) {
+		if (!userDto.getPassword().equals(userDto.getVerifyPassword())) {
 			bindingResult.reject("foo", "Passwords do not match!");
+		}
+
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("roles", getRoles());
 			return "signup";
 		}
-		
-		if(bindingResult.hasErrors()) {
-			
-			return "signup";
-		}
-		
-		UserDto savedUser = userService.createUser(userDto);
+
+		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+//		UserDto savedUser = 
+		userService.createUser(userDto);
 //		redirectAttributes.addFlashAttribute("user", userDto);
 		return "redirect:/login";
 	}
-	
+
+	public Map<Long, String> getRoles() {
+		List<RoleDto> roles = roleService.findAllRoles();
+		Map<Long, String> roleList = new LinkedHashMap<Long, String>();
+		for (RoleDto roleDto : roles) {
+			roleList.put(roleDto.getId(), roleDto.getName().split("_")[1]);
+		}
+		return roleList;
+	}
 
 }
