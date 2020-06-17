@@ -2,6 +2,7 @@ package tm.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -25,9 +26,13 @@ public class AppointmentServiceImpl implements AppointmentService{
 	@Autowired
 	ReservationRepository reservationRepo;
 	
+	@Autowired
+	UserService userService;
+	
 
 	@Override
 	public void createAppointment(Appointment appointment) {
+		appointment.setUser(userService.getCurrentUser());
 		appointmentRepo.save(appointment);
 	}
 
@@ -38,7 +43,18 @@ public class AppointmentServiceImpl implements AppointmentService{
 
 	@Override
 	public List<Appointment> getAppointments() {
-		return (List<Appointment>) appointmentRepo.findAll();
+		
+		Set<String> userRoles = userService.getCurrentUserRoles();
+		for(String role: userRoles) {
+			System.out.print(role+" ");
+		}
+		if(userRoles.contains("ROLE_STUDENT")) {
+			return (List<Appointment>) appointmentRepo.findAll();
+		}
+		
+		int userId = (int)userService.getCurrentUser().getId();
+		return (List<Appointment>) appointmentRepo.findAllByUserId(userId);
+		
 	}
 
 	@Override

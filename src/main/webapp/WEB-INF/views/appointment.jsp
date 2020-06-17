@@ -13,16 +13,15 @@
    <body style="margin-left: 10px">
       <security:authorize access="isAuthenticated()">
          Welcome  
-         
          ${currentUserId }
       </security:authorize>
       <h1>Appointment list</h1>
       <div>
-      	<security:authorize access="hasRole('ROLE_CHECKER')">
-         <a href="
-         <c:url value="/appointments/add" />
-         " class="btn btn-primary"
-         type="button">Add new appointment</a>
+         <security:authorize access="hasRole('ROLE_CHECKER')">
+            <a href="
+            <c:url value="/appointments/add" />
+            " class="btn btn-primary"
+            type="button">Add new appointment</a>
          </security:authorize>
       </div>
       <div class="container">
@@ -48,7 +47,7 @@
                      <td>${appointment.room_no}</td>
                      <security:authorize access="hasRole('ROLE_CHECKER')">
                         <td>
-                           <button class="btn btn-primary" type="button" onClick="getReservations(${appointment.id})">View reservation list</button>
+                           <button class="btn btn-primary" type="button" >View reservation list</button>
                         </td>
                      </security:authorize>
                      <security:authorize access="hasRole('ROLE_STUDENT')">
@@ -61,7 +60,9 @@
             </tbody>
          </table>
          <div id="formInput" style="display:none"></div>
+         
       </div>
+      
       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
       <script
          src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -70,7 +71,7 @@
       <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script>
          function makeReservation(e) {
-        	 
+          
              console.log(e.value);
              let appId = e.value;
              let url = "http://localhost:8080/IoC/reservations/makereservation/" + appId;
@@ -87,7 +88,7 @@
                      	 $('#reservationstatus'+appId).addClass("btn btn-warning");
                          $('#reservationstatus'+appId).html("PENDING");
                          $('#reservationstatus'+appId).prop('disabled', true);
-
+         
                          
                     	}                    
                  },
@@ -102,24 +103,29 @@
              console.log(appointmentId);
              $.ajax({
                  url: "http://localhost:8080/IoC/appointments/getreservations/" + appointmentId,
-				method: "GET",
-				contentType: 'application/json',
-				dataType: 'json',
-				success: (data)=>{
-					console.log(data);
-					
-					$("#formInput").append('<H3 align="center"> Reservation list <H3>');
-		            $('#formInput').append("<H4 align='center'>Reservation id:  " + data[0].id + "</h4>");
-		            $('#formInput').append("<H4 align='center'>status: " + data[0].status + "</h4>");
-
-		            var element = document.getElementById("formInput");
-		            element.style.display = 'block';
-					
-					},
-				error: (error)=>{
-					console.log(error);
-					alert(error)
-					}
+         method: "GET",
+         contentType: 'application/json',
+         dataType: 'json',
+         success: (data)=>{
+         console.log(data);
+         
+         if(data.length == 0){
+         alert("No reservation made in this appointment");
+         return;
+         }
+         
+         $("#formInput").append('<H3 align="center"> Reservation list <H3>');
+              $('#formInput').append("<H4 align='center'>Reservation id:  " + data[0].id + "</h4>");
+              $('#formInput').append("<H4 align='center'>status: " + data[0].status + "</h4>");
+         
+              var element = document.getElementById("formInput");
+              element.style.display = 'block';
+         
+         },
+         error: (error)=>{
+         console.log(error);
+         alert(error)
+         }
               });
          
          }
