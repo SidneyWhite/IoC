@@ -1,3 +1,5 @@
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -34,10 +36,15 @@
 						<td>${reservation.appointment.room_no}</td>
 						<td>${reservation.status}</td>
 						<td>
-							<button class="btn btn-info" type="button"
-								value="${reservation.id}" onClick="acceptReservation(this)">accept</button>
-							<button class="btn btn-info" type="button"
-								value="${reservation.id}" onClick="deleteReservation(this)">delete</button>
+							<security:authorize access="hasRole('ROLE_CHECKER')">
+								<button class="btn btn-info" type="button"
+									value="${reservation.id}" onClick="acceptReservation(this)">accept</button>
+							</security:authorize>
+							<security:authorize access="hasRole('ROLE_STUDENT')">
+								<button class="btn btn-info" type="button"
+									value="${reservation.id}" onClick="deleteReservation(this)">delete</button>
+
+							</security:authorize>
 						</td>
 					</tr>
 				</c:forEach>
@@ -51,6 +58,7 @@
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script>
         function acceptReservation(e) {
             console.log(e.value);
@@ -69,6 +77,7 @@
                 }
             });
         }
+
         function deleteReservation(e) {
             console.log(e.value);
             let resId = e.value;

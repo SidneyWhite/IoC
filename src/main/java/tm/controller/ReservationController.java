@@ -44,11 +44,11 @@ public class ReservationController {
 	public ResponseEntity<String> makeReservation(@PathVariable("appointmentId") int appointmentId, Model model) {
 
 		reservationService.makeReservation(appointmentId, userService.getCurrentUser());
-		
-		final HttpHeaders httpHeaders= new HttpHeaders();
-	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-	    
-	    return new ResponseEntity<String>("{\"status\":\"success\"}", httpHeaders, HttpStatus.OK);
+
+		final HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+		return new ResponseEntity<String>("{\"status\":\"success\"}", httpHeaders, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/acceptreservation/{reservationId}")
@@ -57,7 +57,10 @@ public class ReservationController {
 		Reservation res = reservationService.findById(reservationId);
 		reservationService.accept(res);
 	}
-	
-	
+
+	@RequestMapping(value = "/deletereservation/{reservationId}")
+	public void deleteReservation(@PathVariable("reservationId") int reservationId, Model model) {
+		reservationService.delete(reservationId);
+	}
 
 }
