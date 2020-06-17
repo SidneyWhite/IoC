@@ -2,9 +2,12 @@ package tm.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,13 +35,11 @@ public class UserService implements UserDetailsService {
 	private ModelMapper modelMapper;
 
 	public UserService() {
-		// TODO Auto-generated constructor stub
 		modelMapper = new ModelMapper();
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		User user = userRepository.findByUserName(username);
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 
@@ -60,7 +61,6 @@ public class UserService implements UserDetailsService {
 	}
 
 	public UserDto convertEntityToResponse(User entity) {
-		// TODO Auto-generated method stub
 		if (null == entity) {
 			return null;
 		} else {
@@ -68,15 +68,23 @@ public class UserService implements UserDetailsService {
 		}
 	}
 
+	public Set<String> getCurrentUserRoles() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		Set<String> roles = authentication.getAuthorities().stream().map(r -> r.getAuthority())
+				.collect(Collectors.toSet());
+		return roles;
+	}
+
 	public User getCurrentUser() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = "";
 		if (principal instanceof UserDetails) {
-		   username = ((UserDetails)principal).getUsername();
+			username = ((UserDetails) principal).getUsername();
 		} else {
-		   username = principal.toString();
+			username = principal.toString();
 		}
-		
+
 		return userRepository.findByUserName(username);
 	}
 }
