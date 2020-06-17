@@ -2,22 +2,22 @@ package tm.service;
 
 import java.util.List;
 
-import tm.domain.Appointment;
 import tm.domain.Reservation;
+import tm.domain.User;
 
 public interface ReservationService {
 
-	public void save(Reservation reservation);
-
-	public List<Reservation> findAll();
-
 	public Reservation findById(int reservationId);
 
-	public Reservation update(Reservation reservation);
+	public Reservation accept(Reservation reservation);
 
 	public void delete(int ReservationId);
-	
-	public void makeReservation(int appointmentId);
+
+	public void makeReservation(int appointmentId, User user);
 
 	public List<Reservation> getReservations();
+
+	public List<Reservation> getReservationsByUserId(Integer userId);
+
+	public List<Reservation> getReservationsByAppointmentId(Integer appointmentId);
 }

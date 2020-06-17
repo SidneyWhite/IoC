@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import tm.domain.Reservation;
 import tm.service.AppointmentService;
 import tm.service.ReservationService;
+import tm.service.impl.UserService;
 
 @Controller
 @RequestMapping(value = "/reservations")
@@ -23,52 +24,29 @@ public class ReservationController {
 	@Autowired
 	AppointmentService appointmentService;
 
+	@Autowired
+	UserService userService;
+
 	@RequestMapping(value = { "", "/" }, method = RequestMethod.GET)
 	public String getReservations(Model model) {
-		List<Reservation> reservations = reservationService.getReservations();
+//		List<Reservation> reservations = reservationService.getReservations();
+		List<Reservation> reservations = reservationService
+				.getReservationsByUserId((int) userService.getCurrentUser().getId());
 		model.addAttribute("reservations", reservations);
 		return "reservation";
 	}
 
-//	@PostMapping()
-//	public void createResevation(@RequestBody Reservation reservation) {
-//		reservationService.save(reservation);
-//	}
-//
-//	@GetMapping()
-//	public List<Reservation> getReservations() {
-//		return reservationService.findAll();
-//	}
-//
-
 	@RequestMapping(value = "/makereservation/{appointmentId}")
 	public void makeReservation(@PathVariable("appointmentId") int appointmentId, Model model) {
 
-		reservationService.makeReservation(appointmentId);
+		reservationService.makeReservation(appointmentId, userService.getCurrentUser());
 	}
-//	@GetMapping("/{reservationId}")
-//	public Reservation getReservationById(@PathVariable int reservationId) {
-//		return reservationService.findById(reservationId);
-//	}
-//
-//	@PutMapping("/{reservationId}")
-//	public Reservation updateById(@PathVariable int reservationId, @RequestBody Reservation reservation) {
-//
-//		Reservation reservation1 = reservationService.findById(reservationId);
-//
-//		if (reservation1 == null)
-//
-//			return null;
-//
-//		reservation.setId(reservationId);
-//
-//		return reservationService.update(reservation);
-//
-//	}
-//
-//	@DeleteMapping("/{reservationId}")
-//	public void deleteReservation(@PathVariable int reservationId) {
-//		reservationService.delete(reservationId);
-//	}
+
+	@RequestMapping(value = "/acceptreservation/{reservationId}")
+	public void acceptReservation(@PathVariable("reservationId") int reservationId, Model model) {
+
+		Reservation res = reservationService.findById(reservationId);
+		reservationService.accept(res);
+	}
 
 }

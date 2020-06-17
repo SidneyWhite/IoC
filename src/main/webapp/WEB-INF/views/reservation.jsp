@@ -21,6 +21,8 @@
 					<td>Appointment id</td>
 					<td>Date</td>
 					<td>Room no</td>
+					<td>Status</td>
+					<td></td>
 				</tr>
 			</thead>
 			<tbody class="table-striped">
@@ -30,6 +32,13 @@
 						<td>${reservation.appointment.id}</td>
 						<td>${reservation.appointment.date}</td>
 						<td>${reservation.appointment.room_no}</td>
+						<td>${reservation.status}</td>
+						<td>
+							<button class="btn btn-info" type="button"
+								value="${reservation.id}" onClick="acceptReservation(this)">accept</button>
+							<button class="btn btn-info" type="button"
+								value="${reservation.id}" onClick="deleteReservation(this)">delete</button>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -42,5 +51,41 @@
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script>
+        function acceptReservation(e) {
+            console.log(e.value);
+            let resId = e.value;
+            let url = "http://localhost:8080/IoC/reservations/acceptreservation/" + resId;
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                success: (data) => {
+                    console.log(data);
+                    alert("success");
+                },
+                error: () => {
+                    alert("error");
+                }
+            });
+        }
+        function deleteReservation(e) {
+            console.log(e.value);
+            let resId = e.value;
+            let url = "http://localhost:8080/IoC/reservations/deletereservation/" + resId;
+
+            $.ajax({
+                url: url,
+                method: "GET",
+                success: (data) => {
+                    console.log(data);
+                    alert("success");
+                },
+                error: () => {
+                    alert("error");
+                }
+            });
+        }
+    </script>
 </body>
 </html>

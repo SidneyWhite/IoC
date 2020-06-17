@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import tm.domain.Appointment;
 import tm.domain.Reservation;
+import tm.domain.User;
 import tm.enums.ReservationStatus;
 import tm.repository.AppointmentRepository;
 import tm.repository.ReservationRepository;
@@ -21,40 +22,38 @@ public class ReservationServiceImpl implements ReservationService {
 	@Autowired
 	ReservationRepository reservationRepository;
 
-//	@Autowired
-//	Notification notif;
-
 	@Autowired
 	AppointmentRepository appointmentRepository;
 
 	@Override
-	public void save(Reservation reservation) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<Reservation> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Reservation findById(int reservationId) {
-		// TODO Auto-generated method stub
-		return null;
+		return reservationRepository.findOne(reservationId);
 	}
 
 	@Override
-	public Reservation update(Reservation reservation) {
-		// TODO Auto-generated method stub
-		return null;
+	public Reservation accept(Reservation reservation) {
+
+		List<Reservation> lstReservation = getReservationsByAppointmentId(reservation.getAppointmentId());
+
+		for (Reservation reser : lstReservation) {
+			if (reser.getId() != reservation.getId()) {
+				reser.setStatus(ReservationStatus.DECLINED);
+				reservationRepository.save(reser);
+			}
+		}
+		reservation.setStatus(ReservationStatus.ACCEPTED);
+
+		return reservationRepository.save(reservation);
+
 	}
 
 	@Override
 	public void delete(int ReservationId) {
-		// TODO Auto-generated method stub
-
+		Reservation oldReservation = findById(ReservationId);
+		if (oldReservation == null) {
+			return;
+		}
+		reservationRepository.delete(ReservationId);
 	}
 
 	@Override
@@ -63,7 +62,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public void makeReservation(int appointmentId) {
+	public void makeReservation(int appointmentId, User user) {
 
 		Appointment appointment = appointmentRepository.findOne(appointmentId);
 
@@ -71,12 +70,22 @@ public class ReservationServiceImpl implements ReservationService {
 		reservation.setAppointment(appointment);
 		reservation.setIsReminderSent(0);
 		reservation.setStatus(ReservationStatus.PENDING);
-		reservation.setUserId(1);
+		reservation.setConsumer(user);
 
 		reservationRepository.save(reservation);
 		appointmentRepository.save(appointment);
 		System.out.println("saved");
 
+	}
+
+	@Override
+	public List<Reservation> getReservationsByUserId(Integer userId) {
+		return (List<Reservation>) reservationRepository.findByUserId(userId);
+	}
+
+	@Override
+	public List<Reservation> getReservationsByAppointmentId(Integer appointmentId) {
+		return (List<Reservation>) reservationRepository.findByUserId(appointmentId);
 	}
 
 }

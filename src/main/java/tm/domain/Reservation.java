@@ -10,8 +10,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import tm.enums.ReservationStatus;
@@ -29,8 +27,8 @@ public class Reservation {
 	@Column(name = "is_reminder_sent")
 	private Integer isReminderSent;
 
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	private User consumer;
+	@ManyToOne
+	private User consumer;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Appointment appointment;
@@ -67,11 +65,13 @@ public class Reservation {
 		this.status = status;
 	}
 
-	/*
-	 * public User getConsumer() { return consumer; }
-	 * 
-	 * public void setConsumer(User consumer) { this.consumer = consumer; }
-	 */
+	public User getConsumer() {
+		return consumer;
+	}
+
+	public void setConsumer(User consumer) {
+		this.consumer = consumer;
+	}
 
 	public Appointment getAppointment() {
 		return appointment;
@@ -79,14 +79,6 @@ public class Reservation {
 
 	public void setAppointment(Appointment appointment) {
 		this.appointment = appointment;
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
 	}
 
 	public Integer getAppointmentId() {
