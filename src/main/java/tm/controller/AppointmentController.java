@@ -11,6 +11,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,8 +24,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import tm.domain.Appointment;
+import tm.domain.Reservation;
 import tm.service.AppointmentService;
 import tm.service.impl.UserService;
 
@@ -30,7 +36,7 @@ import tm.service.impl.UserService;
 public class AppointmentController {
 	
 	@Autowired
-	AppointmentService service;
+	AppointmentService appointmentService;
 	
 	@Autowired
 	UserService userService;
@@ -40,7 +46,7 @@ public class AppointmentController {
 		
 		model.addAttribute("currentUserId", userService.getCurrentUser().getId());
 		
-		List<Appointment> appointments = service.getAppointments();
+		List<Appointment> appointments = appointmentService.getAppointments();
 		model.addAttribute("appointments", appointments);
 		return "appointment";
 	}
@@ -51,7 +57,7 @@ public class AppointmentController {
 	public String getAppointment(@PathVariable("appId") String appointmentId, Model model) {
 		System.out.println(appointmentId);
 		List<Appointment> appointments = new ArrayList<Appointment>();
-		appointments.add(service.getAppointment(Integer.parseInt(appointmentId)));
+		appointments.add(appointmentService.getAppointment(Integer.parseInt(appointmentId)));
 		model.addAttribute("appointments", appointments);
 		return "appointment";
 	}
@@ -67,10 +73,35 @@ public class AppointmentController {
 		if(result.hasErrors()) {
 			return "addAppointment";
 		}
-		service.createAppointment(appointment);
+		appointmentService.createAppointment(appointment);
 		
 		return "redirect:/appointments";
 	}
+	
+//	@RequestMapping(value = "/getreservations/{appointmentId}")
+//	public ResponseEntity<String> getReservation(@PathVariable("appointmentId") int appId, Model model){
+//		
+//		List<Reservation> reservationList= appointmentService.getReservations(appId);
+//		
+//		final HttpHeaders httpHeaders= new HttpHeaders();
+//	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+//	    return new ResponseEntity<String>("{\"status\":\"success\"}", httpHeaders, HttpStatus.OK);
+//	}
+	
+	@RequestMapping(value = "/getreservations/{appointmentId}")
+	public ResponseEntity<String> getReservation(@PathVariable("appointmentId") int appId, Model model){
+		List<Reservation> reservationList= appointmentService.getReservations(appId);
+		
+//		return reservationList;
+		
+		
+		
+		final HttpHeaders httpHeaders= new HttpHeaders();
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+	    return new ResponseEntity<String>("{\"status\":\"success\"}", httpHeaders, HttpStatus.OK);
+	}
+	
+	
 	
 	
 	

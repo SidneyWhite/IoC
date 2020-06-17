@@ -3,6 +3,10 @@ package tm.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,11 +45,18 @@ public class ReservationController {
 //	}
 //
 
-	@RequestMapping(value = "/makereservation/{appointmentId}")
-	public void makeReservation(@PathVariable("appointmentId") int appointmentId, Model model) {
+	@RequestMapping(value = "/makereservation/{appointmentId}", produces = "application/json")
+	public ResponseEntity<String> makeReservation(@PathVariable("appointmentId") int appointmentId, Model model) {
 
 		reservationService.makeReservation(appointmentId);
+		
+		final HttpHeaders httpHeaders= new HttpHeaders();
+	    httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+	    
+	    return new ResponseEntity<String>("{\"status\":\"success\"}", httpHeaders, HttpStatus.OK);
 	}
+	
+	
 //	@GetMapping("/{reservationId}")
 //	public Reservation getReservationById(@PathVariable int reservationId) {
 //		return reservationService.findById(reservationId);
