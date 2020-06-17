@@ -2,16 +2,29 @@ package tm.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class UserDto {
 
 	private Long id;
+
+	@NotEmpty(message = "{NotEmpty}")
 	private String firstName;
+	@NotEmpty(message = "{NotEmpty}")
 	private String lastName;
+	@Email
 	private String email;
+	@NotEmpty(message = "{NotEmpty}")
 	private String userName;
 
+	@NotEmpty(message = "{NotEmpty}")
 	private String password;
+	@NotEmpty(message = "{NotEmpty}")
 	private String verifyPassword;
+	@NotNull(message = "{NotNull}")
 	private long roleId;
 
 	public Long getId() {

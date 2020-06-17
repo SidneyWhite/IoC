@@ -12,7 +12,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<p>
 		<security:authorize access="isAuthenticated()">
   					Welcome  <security:authentication property="principal.username" />
@@ -24,7 +23,7 @@
 				method="POST">
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-						<input type="submit" id="btnAdd"
+						<input type="submit" id="logout"
 							class="btn btn-danger btn-mini  pull-right" value="Logout" />
 					</div>
 				</div>

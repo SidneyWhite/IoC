@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,7 +41,7 @@ public class UserController {
 
 		Map<Long, String> roleList = new LinkedHashMap<Long, String>();
 		for (RoleDto roleDto : roles) {
-			roleList.put(roleDto.getId(), roleDto.getName());
+			roleList.put(roleDto.getId(), roleDto.getName().split("_")[1]);
 		}
 
 		model.addAttribute("roles", roleList);
@@ -47,9 +49,19 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String processSignup(@ModelAttribute("newUser") UserDto userDto, BindingResult bindingResult,
+	public String processSignup(@Valid @ModelAttribute("newUser") UserDto userDto, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 
+		if(!userDto.getPassword().equals(userDto.getVerifyPassword())) {
+			bindingResult.reject("foo", "Passwords do not match!");
+			return "signup";
+		}
+		
+		if(bindingResult.hasErrors()) {
+			
+			return "signup";
+		}
+		
 		UserDto savedUser = userService.createUser(userDto);
 //		redirectAttributes.addFlashAttribute("user", userDto);
 		return "redirect:/login";

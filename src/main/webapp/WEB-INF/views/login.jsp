@@ -37,20 +37,20 @@
 							method="post">
 							<fieldset>
 								<div class="form-group">
-									<input class="form:input-large" placeholder="User Name"
-										name='username' type="text">
+									<input class="form:input-large form-control" placeholder="User Name"
+										name='username' type="text" required="required">
 								</div>
 								<div class="form-group">
-									<input class=" form:input-large" placeholder="Password"
-										name='password' type="password" value="">
+									<input class=" form:input-large form-control" placeholder="Password"
+										name='password' type="password" value="" required="required">
 								</div>
 								<div class="form-group">
-									<input type='checkbox' name="keepMe" />Remember Me <br />
+									<input type='checkbox' name="keepMe" /> Remember Me <br />
 								</div>
 								<input class="btn btn-lg btn-primary btn-mini" type="submit"
 									value="Login">
 								
-								<a href="<c:url value="/signup" />" class="btn btn-warning btn-mini pull-right">Sign Up</a>	
+								<a href="<c:url value="/signup" />" class="btn btn-warning btn-lg pull-right">Sign Up</a>	
 							</fieldset>
 							<security:csrfInput />
 						</form>
