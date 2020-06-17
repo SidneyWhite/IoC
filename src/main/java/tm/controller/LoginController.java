@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import tm.dto.UserDto;
 
 @Controller
-@SessionAttributes("user")
+//@SessionAttributes("user")
 public class LoginController {
 
 	@RequestMapping(value = { "", "/login" }, method = RequestMethod.GET)

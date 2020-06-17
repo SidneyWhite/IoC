@@ -17,98 +17,106 @@
 		<div class="jumbotron">
 			<div class="container">
 				<h1>Sign Up</h1>
-				<p>Register as a user
-				<p>
 			</div>
 		</div>
 	</section>
 	<section class="container">
-		<form:form modelAttribute="newUser" class="form-horizontal"
-			action="signup" method="post">
-			<fieldset>
-				<legend>Register as a user</legend>
 
-				<form:errors path="*" cssClass="alert alert-danger" element="div" />
-				<div class="form-group">
-					<label class="control-label col-lg-2 col-lg-2" for="userName">
-						User Name</label>
-					<div class="col-lg-10">
-						<form:input id="userName" path="userName" type="text"
-							class="form:input-large" />
-						<form:errors path="userName" cssClass="text-danger" />
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Register as a user</h3>
 					</div>
-				</div>
+					<div class="panel-body">
 
-				<div class="form-group">
-					<label class="control-label col-lg-2" for="firstName">First
-						Name</label>
-					<div class="col-lg-10">
-						<form:input id="firstName" path="firstName" type="text"
-							class="form:input-large" />
-						<form:errors path="firstName" cssClass="text-danger" />
-					</div>
-				</div>
+						<form:form modelAttribute="newUser" class="form-horizontal"
+							action="signup" method="post">
 
-				<div class="form-group">
-					<label class="control-label col-lg-2" for="lastName">Last
-						Name</label>
-					<div class="col-lg-10">
-						<div class="form:input-prepend">
-							<form:input id="lastName" path="lastName" type="text"
-								class="form:input-large" />
-							<form:errors path="lastName" cssClass="text-danger" />
-						</div>
-					</div>
-				</div>
+							<form:errors path="*" cssClass="alert alert-danger" element="div" />
+							
+							<div class="form-group">
+								<label class="control-label col-lg-3" for="userName">
+									User Name</label>
+								<div class="col-lg-9">
+									<form:input id="userName" path="userName" type="text"
+										class="form:input-large form-control" required="required"/>
+									<form:errors path="userName" cssClass="text-danger" />
+								</div>
+							</div>
 
-				<div class="form-group">
-					<label class="control-label col-lg-2" for="roleId">Roles</label>
-					<div class="col-lg-10">
-						<div class="form:input-prepend">
-							<form:select id="roleId" path="roleId" class="form-control">
-								<form:options items="${roles}"/>
-							</form:select>
-						</div>
-					</div>
-				</div>
+							<div class="form-group">
+								<label class="control-label col-lg-3" for="firstName">First
+									Name</label>
+								<div class="col-lg-9">
+									<form:input id="firstName" path="firstName" type="text"
+										class="form:input-large form-control" required="required"/>
+									<form:errors path="firstName" cssClass="text-danger" />
+								</div>
+							</div>
 
-				<div class="form-group">
-					<label class="control-label col-lg-2" for="street">Email</label>
-					<div class="col-lg-10">
-						<div class="form:input-prepend">
-							<form:input id="email" path="email" type="text"
-								class="form:input-large" />
-							<form:errors path="email" cssClass="text-danger" />
-						</div>
-					</div>
-				</div>
+							<div class="form-group">
+								<label class="control-label col-lg-3" for="lastName">Last
+									Name</label>
+								<div class="col-lg-9">
+									<div class="form:input-prepend">
+										<form:input id="lastName" path="lastName" type="text"
+											class="form:input-large form-control" required="required"/>
+										<form:errors path="lastName" cssClass="text-danger" />
+									</div>
+								</div>
+							</div>
 
-				<div class="form-group">
-					<label class="control-label col-lg-2" for="city">Password</label>
-					<div class="col-lg-10">
-						<div class="form:input-prepend">
-							<form:input id="password" path="password" type="text"
-								class="form:input-large" />
-							<form:errors path="password" cssClass="text-danger" />
-						</div>
+							<div class="form-group">
+								<label class="control-label col-lg-3" for="roleId">Roles</label>
+								<div class="col-lg-9">
+									<div class="form:input-prepend">
+										<form:select id="roleId" path="roleId" class="form-control">
+											<form:options items="${roles}" />
+										</form:select>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-lg-3" for="street">Email</label>
+								<div class="col-lg-9">
+									<div class="form:input-prepend">
+										<form:input id="email" path="email" type="text"
+											class="form:input-large form-control" required="required"/>
+										<form:errors path="email" cssClass="text-danger" />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-lg-3" for="city">Password</label>
+								<div class="col-lg-9">
+									<div class="form:input-prepend">
+										<form:input id="password" path="password" type="password"
+											class="form:input-large form-control" required="required"/>
+										<form:errors path="password" cssClass="text-danger" />
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-lg-3" for="state">Verify
+									Password</label>
+								<div class="col-lg-9">
+									<div class="form:input-prepend">
+										<form:input id="verifyPassword" path="verifyPassword"
+											type="password" class="form:input-large form-control" required="required"/>
+										<form:errors path="verifyPassword" cssClass="text-danger" />
+									</div>
+								</div>
+							</div>
+							<p id="buttons">
+								<input id="submit" type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+							</p>
+						</form:form>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="control-label col-lg-2" for="state">Verify
-						Password</label>
-					<div class="col-lg-10">
-						<div class="form:input-prepend">
-							<form:input id="verifyPassword" path="verifyPassword" type="text"
-								class="form:input-large" />
-							<form:errors path="verifyPassword" cssClass="text-danger" />
-						</div>
-					</div>
-				</div>
-				<p id="buttons">
-					<input id="submit" type="submit" value="Add a User">
-				</p>
-			</fieldset>
-		</form:form>
+			</div>
 	</section>
 
 </body>
