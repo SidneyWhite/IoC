@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import tm.domain.Appointment;
 import tm.service.AppointmentService;
+import tm.service.impl.UserService;
 
 @Controller
 @RequestMapping(value="/appointments")
@@ -32,8 +33,14 @@ public class AppointmentController {
 	@Autowired
 	AppointmentService service;
 	
+	@Autowired
+	UserService userService;
+	
 	@RequestMapping(value = {"", "/"}, method=RequestMethod.GET)
 	public String getAllAppointments(Model model) {
+		
+		model.addAttribute("currentUserId", userService.getCurrentUser().getId());
+		
 		List<Appointment> appointments = service.getAppointments();
 		model.addAttribute("appointments", appointments);
 		return "appointment";

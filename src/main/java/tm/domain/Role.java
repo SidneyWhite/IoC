@@ -1,5 +1,6 @@
 package tm.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,7 @@ public class Role {
 	private long id;
 
 	@NotNull
+	@Column(unique = true)
 	private String name;
 
 	public Role() {

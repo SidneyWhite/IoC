@@ -4,10 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import tm.dto.UserDto;
 
 @Controller
+@SessionAttributes("user")
 public class LoginController {
 
 	@RequestMapping(value = { "", "/login" }, method = RequestMethod.GET)
@@ -35,6 +37,6 @@ public class LoginController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(Model model) {
-		return "redirect:/welcome";
+		return "redirect:/login";
 	}
 }

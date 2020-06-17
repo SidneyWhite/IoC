@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +20,7 @@ import tm.repository.RoleRepository;
 import tm.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserDetailsService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public UserServiceImpl() {
+	public UserService() {
 		// TODO Auto-generated constructor stub
 		modelMapper = new ModelMapper();
 	}
@@ -67,4 +68,15 @@ public class UserServiceImpl implements UserDetailsService {
 		}
 	}
 
+	public User getCurrentUser() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = "";
+		if (principal instanceof UserDetails) {
+		   username = ((UserDetails)principal).getUsername();
+		} else {
+		   username = principal.toString();
+		}
+		
+		return userRepository.findByUserName(username);
+	}
 }

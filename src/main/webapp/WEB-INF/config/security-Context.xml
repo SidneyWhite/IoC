@@ -18,7 +18,7 @@
 
 		<!-- -->
 		<security:form-login login-page="/login"
-			default-target-url="/welcome" always-use-default-target="true"
+			default-target-url="/appointments" always-use-default-target="true"
 			authentication-failure-url="/loginfailed" />
 
 		<security:logout logout-success-url="/logout"

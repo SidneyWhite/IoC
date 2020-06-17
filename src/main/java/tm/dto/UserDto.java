@@ -1,5 +1,7 @@
 package tm.dto;
 
+import java.util.List;
+
 public class UserDto {
 
 	private Long id;
@@ -72,7 +74,7 @@ public class UserDto {
 		return roleId;
 	}
 
-	public void setRoleId(int roleId) {
+	public void setRoleId(long roleId) {
 		this.roleId = roleId;
 	}
 

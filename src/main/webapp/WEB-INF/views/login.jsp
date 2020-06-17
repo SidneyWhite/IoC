@@ -51,7 +51,7 @@
 								<input class="btn btn-lg btn-primary btn-mini" type="submit"
 									value="Login">
 								
-								<a href="<c:url value="/users/signup" />" class="btn btn-warning btn-mini pull-right">Add a new one</a>	
+								<a href="<c:url value="/signup" />" class="btn btn-warning btn-mini pull-right">Sign Up</a>	
 							</fieldset>
 							<security:csrfInput />
 						</form>
