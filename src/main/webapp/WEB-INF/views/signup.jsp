@@ -31,7 +31,7 @@
 					<div class="panel-body">
 
 						<form:form modelAttribute="newUser" class="form-horizontal"
-							action="signup" method="post">
+							action="signup" method="post" autocomplete="off">
 
 							<form:errors path="*" cssClass="alert alert-danger" element="div" />
 							
@@ -40,7 +40,7 @@
 									User Name</label>
 								<div class="col-lg-9">
 									<form:input id="userName" path="userName" type="text"
-										class="form:input-large form-control" required="required"/>
+										class="form:input-large form-control" required="required" autocomplete="off"/>
 									<form:errors path="userName" cssClass="text-danger" />
 								</div>
 							</div>
@@ -94,7 +94,7 @@
 								<div class="col-lg-9">
 									<div class="form:input-prepend">
 										<form:input id="password" path="password" type="password"
-											class="form:input-large form-control" required="required"/>
+											class="form:input-large form-control" required="required" autocomplete="new-password"/>
 										<form:errors path="password" cssClass="text-danger" />
 									</div>
 								</div>
