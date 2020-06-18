@@ -41,14 +41,8 @@ public class UserController {
 
 	@RequestMapping(value = { "/signup" }, method = RequestMethod.GET)
 	public String signUp(@ModelAttribute("newUser") UserDto userDto, Model model) {
-		List<RoleDto> roles = roleService.findAllRoles();
 
-		Map<Long, String> roleList = new LinkedHashMap<Long, String>();
-		for (RoleDto roleDto : roles) {
-			roleList.put(roleDto.getId(), roleDto.getName().split("_")[1]);
-		}
-
-		model.addAttribute("roles", roleList);
+		model.addAttribute("roles", getRoles());
 		return "signup";
 	}
 
