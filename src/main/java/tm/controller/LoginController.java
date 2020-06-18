@@ -30,11 +30,6 @@ public class LoginController {
 		return "welcome";
 	}
 
-//	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
-//	public String loginDo() {
-//		return "appointmentList";
-//	}
-
 	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
 	public String loginerror(Model model) {
 

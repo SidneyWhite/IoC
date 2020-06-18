@@ -4,6 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +16,20 @@
 <body style="margin-left: 10px">
 	<security:authorize access="isAuthenticated()">
          Welcome  
-         ${currentUserId }
-      </security:authorize>
+         ${currentUserId } - <security:authentication
+			property="principal.username" />
+
+		<spring:url value="/dologout" var="logout_url" />
+		<form:form action="${logout_url}" class="form-horizontal"
+			method="POST">
+			<div class="form-group">
+				<div class="col-lg-offset-2 col-lg-10">
+					<input type="submit" id="logout"
+						class="btn btn-danger btn-mini  pull-right" value="Logout" />
+				</div>
+			</div>
+		</form:form>
+	</security:authorize>
 	<h1>Appointment list</h1>
 	<div>
 		<security:authorize access="hasRole('ROLE_CHECKER')">

@@ -34,13 +34,14 @@
 							action="signup" method="post" autocomplete="off">
 
 							<form:errors path="*" cssClass="alert alert-danger" element="div" />
-							
+
 							<div class="form-group">
 								<label class="control-label col-lg-3" for="userName">
 									User Name</label>
 								<div class="col-lg-9">
 									<form:input id="userName" path="userName" type="text"
-										class="form:input-large form-control" required="required" autocomplete="off"/>
+										class="form:input-large form-control" required="required"
+										autocomplete="off" />
 									<form:errors path="userName" cssClass="text-danger" />
 								</div>
 							</div>
@@ -50,7 +51,7 @@
 									Name</label>
 								<div class="col-lg-9">
 									<form:input id="firstName" path="firstName" type="text"
-										class="form:input-large form-control" required="required"/>
+										class="form:input-large form-control" required="required" />
 									<form:errors path="firstName" cssClass="text-danger" />
 								</div>
 							</div>
@@ -61,7 +62,7 @@
 								<div class="col-lg-9">
 									<div class="form:input-prepend">
 										<form:input id="lastName" path="lastName" type="text"
-											class="form:input-large form-control" required="required"/>
+											class="form:input-large form-control" required="required" />
 										<form:errors path="lastName" cssClass="text-danger" />
 									</div>
 								</div>
@@ -71,7 +72,8 @@
 								<label class="control-label col-lg-3" for="roleId">Roles</label>
 								<div class="col-lg-9">
 									<div class="form:input-prepend">
-										<form:select id="roleId" path="roleId" class="form-control" required="required">
+										<form:select id="roleId" path="roleId" class="form-control"
+											required="required">
 											<form:options items="${roles}" />
 										</form:select>
 									</div>
@@ -83,7 +85,7 @@
 								<div class="col-lg-9">
 									<div class="form:input-prepend">
 										<form:input id="email" path="email" type="text"
-											class="form:input-large form-control" required="required"/>
+											class="form:input-large form-control" required="required" />
 										<form:errors path="email" cssClass="text-danger" />
 									</div>
 								</div>
@@ -94,7 +96,8 @@
 								<div class="col-lg-9">
 									<div class="form:input-prepend">
 										<form:input id="password" path="password" type="password"
-											class="form:input-large form-control" required="required" autocomplete="new-password"/>
+											class="form:input-large form-control" required="required"
+											autocomplete="new-password" />
 										<form:errors path="password" cssClass="text-danger" />
 									</div>
 								</div>
@@ -105,18 +108,21 @@
 								<div class="col-lg-9">
 									<div class="form:input-prepend">
 										<form:input id="verifyPassword" path="verifyPassword"
-											type="password" class="form:input-large form-control" required="required"/>
+											type="password" class="form:input-large form-control"
+											required="required" />
 										<form:errors path="verifyPassword" cssClass="text-danger" />
 									</div>
 								</div>
 							</div>
 							<p id="buttons">
-								<input id="submit" type="submit" value="Register" class="btn btn-lg btn-primary btn-block">
+								<input id="submit" type="submit" value="Register"
+									class="btn btn-lg btn-primary btn-block">
 							</p>
 						</form:form>
 					</div>
 				</div>
 			</div>
+		</div>
 	</section>
 
 </body>
