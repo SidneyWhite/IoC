@@ -35,7 +35,7 @@ public class UserController {
 
 	@Autowired
 	private RoleService roleService;
-	
+
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
@@ -66,9 +66,7 @@ public class UserController {
 		}
 
 		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-//		UserDto savedUser = 
 		userService.createUser(userDto);
-//		redirectAttributes.addFlashAttribute("user", userDto);
 		return "redirect:/login";
 	}
 
