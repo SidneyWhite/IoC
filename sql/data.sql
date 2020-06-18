@@ -29,7 +29,7 @@ INSERT INTO Appointment (`id`,`date`,`room_no`,`user_id`) VALUES (4,'2020-07-01'
 
 
 --INSERTING DUMMY RESERVATIONS
-INSERT INTO Reservation (`id`,`is_reminder_sent`,`status`,`appointment_id`,`consumer_id`) VALUES (1,0,'PENDING',1, '3');
-INSERT INTO Reservation (`id`,`is_reminder_sent`,`status`,`appointment_id`,`consumer_id`) VALUES (2,0,'PENDING',2, '3');
-INSERT INTO Reservation (`id`,`is_reminder_sent`,`status`,`appointment_id`,`consumer_id`) VALUES (3,0,'PENDING',3, '3');
-INSERT INTO Reservation (`id`,`is_reminder_sent`,`status`,`appointment_id`,`consumer_id`) VALUES (4,0,'PENDING',4, '3');
+INSERT INTO Reservation (`id`,`is_reminder_sent`,`status`,`appointment_id`,`consumer_id`) VALUES (1,0,'PENDING',1, '2');
+INSERT INTO Reservation (`id`,`is_reminder_sent`,`status`,`appointment_id`,`consumer_id`) VALUES (2,0,'PENDING',2, '2');
+INSERT INTO Reservation (`id`,`is_reminder_sent`,`status`,`appointment_id`,`consumer_id`) VALUES (3,0,'PENDING',3, '2');
+INSERT INTO Reservation (`id`,`is_reminder_sent`,`status`,`appointment_id`,`consumer_id`) VALUES (4,0,'PENDING',4, '2');
