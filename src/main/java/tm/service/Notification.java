@@ -1,12 +1,12 @@
 package tm.service;
 
 import java.time.LocalDateTime;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,10 +22,11 @@ import tm.enums.ENotificationStatus;
 import tm.repository.NotificationRepository;
 import tm.repository.ReservationRepository;
 
+@Service
+@Transactional
 public class Notification {
 
-//	@Value("${schedule.notification.reminder.minutes}")
-	private long reminderMinutesBeforeAppointment;
+	private long reminderMinutesBeforeAppointment = 10;
 
 //	@Autowired
 //	private JavaMailSender mailSender;
@@ -36,7 +37,7 @@ public class Notification {
 	@Autowired
 	private ReservationRepository reservRepo;
 
-//	@Scheduled(fixedDelayString = "${sync-job.delay.milliseconds.fixed}", initialDelayString = "${sync-job.delay.milliseconds.initial}")
+	@Scheduled(fixedDelayString = "5000", initialDelayString = "5000")
 	public void schSendEmail() {
 
 		List<EmailNotification> lstEmail = repository.findByStatus(ENotificationStatus.NEW);
@@ -49,7 +50,7 @@ public class Notification {
 		System.out.println("working schedule schSendEmail: " + LocalDateTime.now());
 	}
 
-//	@Scheduled(fixedDelayString = "${sync-job.delay.milliseconds.fixed}", initialDelayString = "${sync-job.delay.milliseconds.initial}")
+	@Scheduled(fixedDelayString = "5000", initialDelayString = "5000")
 	public void schReminder() {
 
 		Calendar date = Calendar.getInstance();
@@ -94,32 +95,32 @@ public class Notification {
 
 	private void insertReminderNotification(Reservation reservation) {
 		// For student
-//		EmailNotification emailNotif = new EmailNotification();
-//		emailNotif.setReservation(reservation);
-//		emailNotif.setAppointmentDatetime(reservation.getAppointment().getAppointmentDate());
-//		emailNotif.setContent(String.format("Dear %s, Your appointment will start at %s",
-//				reservation.getConsumer().getFirstName(), reservation.getReservationDate()));
-//		emailNotif.setCreatedDatetime(new Date());
-//		emailNotif.setRecipientEmail(reservation.getConsumer().getEmail());
-//		emailNotif.setSentDatetime(null);
-//		emailNotif.setStatus(ENotificationStatus.NEW);
-//		emailNotif.setSubject(String.format("Appointment id: %s", reservation.getAppointment().getId()));
-//		emailNotif.setReservation(reservation);
-//		repository.save(emailNotif);
-//
-//		// For TA Checker
-//		emailNotif = new EmailNotification();
-//		emailNotif.setReservation(reservation);
-//		emailNotif.setAppointmentDatetime(reservation.getAppointment().getAppointmentDate());
-//		emailNotif.setContent(String.format("Dear %s, Your appointment will start at %s",
-//				reservation.getAppointment().getProvider().getFirstName(), reservation.getReservationDate()));
-//		emailNotif.setCreatedDatetime(new Date());
-//		emailNotif.setRecipientEmail(reservation.getAppointment().getProvider().getEmail());
-//		emailNotif.setSentDatetime(null);
-//		emailNotif.setStatus(ENotificationStatus.NEW);
-//		emailNotif.setSubject(String.format("Appointment id: %s", reservation.getAppointment().getId()));
-//		emailNotif.setReservation(reservation);
-//		repository.save(emailNotif);
+		EmailNotification emailNotif = new EmailNotification();
+		emailNotif.setReservation(reservation);
+		emailNotif.setAppointmentDatetime(reservation.getAppointment().getDate());
+		emailNotif.setContent(String.format("Dear %s, Your appointment will start at %s",
+				reservation.getConsumer().getFirstName(), reservation.getAppointment().getDate()));
+		emailNotif.setCreatedDatetime(new Date());
+		emailNotif.setRecipientEmail(reservation.getConsumer().getEmail());
+		emailNotif.setSentDatetime(null);
+		emailNotif.setStatus(ENotificationStatus.NEW);
+		emailNotif.setSubject(String.format("Appointment id: %s", reservation.getAppointment().getId()));
+		emailNotif.setReservation(reservation);
+		repository.save(emailNotif);
+
+		// For TA Checker
+		emailNotif = new EmailNotification();
+		emailNotif.setReservation(reservation);
+		emailNotif.setAppointmentDatetime(reservation.getAppointment().getDate());
+		emailNotif.setContent(String.format("Dear %s, Your appointment will start at %s",
+				reservation.getAppointment().getUser().getFirstName(), reservation.getAppointment().getDate()));
+		emailNotif.setCreatedDatetime(new Date());
+		emailNotif.setRecipientEmail(reservation.getAppointment().getUser().getEmail());
+		emailNotif.setSentDatetime(null);
+		emailNotif.setStatus(ENotificationStatus.NEW);
+		emailNotif.setSubject(String.format("Appointment id: %s", reservation.getAppointment().getId()));
+		emailNotif.setReservation(reservation);
+		repository.save(emailNotif);
 	}
 
 	@Async
@@ -127,16 +128,16 @@ public class Notification {
 	public void insertNotification(Reservation reservation) {
 		try {
 			EmailNotification emailNotif = new EmailNotification();
-//			emailNotif.setReservation(reservation);
-//			emailNotif.setAppointmentDatetime(reservation.getAppointment().getAppointmentDate());
-//			emailNotif.setContent(String.format("Dear %s, Your reservation number %s is %s",
-//					reservation.getConsumer().getFirstName(), reservation.getId(), reservation.getStatus()));
-//			emailNotif.setCreatedDatetime(new Date());
-//			emailNotif.setRecipientEmail(reservation.getConsumer().getEmail());
-//			emailNotif.setSentDatetime(null);
-//			emailNotif.setStatus(ENotificationStatus.NEW);
-//			emailNotif.setSubject(String.format("Decision about reservation id: %s", reservation.getId()));
-//			emailNotif.setReservation(reservation);
+			emailNotif.setReservation(reservation);
+			emailNotif.setAppointmentDatetime(reservation.getAppointment().getDate());
+			emailNotif.setContent(String.format("Dear %s, Your reservation number %s is %s",
+					reservation.getConsumer().getFirstName(), reservation.getId(), reservation.getStatus()));
+			emailNotif.setCreatedDatetime(new Date());
+			emailNotif.setRecipientEmail(reservation.getConsumer().getEmail());
+			emailNotif.setSentDatetime(null);
+			emailNotif.setStatus(ENotificationStatus.NEW);
+			emailNotif.setSubject(String.format("Decision about reservation id: %s", reservation.getId()));
+			emailNotif.setReservation(reservation);
 			repository.save(emailNotif);
 		} catch (Exception e) {
 			System.out.println("exception on Notification.insertNotification: " + e.getMessage());
