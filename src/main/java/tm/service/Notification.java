@@ -1,17 +1,18 @@
 package tm.service;
 
 import java.time.LocalDateTime;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import tm.repository.ReservationRepository;
 
 @Service
 @Transactional
+@Component("Notification")
 public class Notification {
 
 	private long reminderMinutesBeforeAppointment = 10;
@@ -74,12 +76,23 @@ public class Notification {
 		SimpleMailMessage message = new SimpleMailMessage();
 		try {
 
+			JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+			mailSender.setHost("smtp.gmail.com");
+			mailSender.setUsername("cs544.team6@gmail.com");
+			mailSender.setPassword("CS544_team6");
+			mailSender.setPort(587);
+			mailSender.setProtocol("smtp");
+			Properties javaMailProperties = new Properties();
+			javaMailProperties.setProperty("mail.smtp.auth", "true");
+			javaMailProperties.setProperty("mail.smtp.starttls.enable", "true");
+			mailSender.setJavaMailProperties(javaMailProperties);
+
 			System.out.println("sending email to " + email.getContent());
 			message.setFrom("tm_life@miu.edu");
 			message.setTo(email.getRecipientEmail());
 			message.setSubject(email.getSubject());
 			message.setText(email.getContent());
-//			mailSender.send(message);
+			mailSender.send(message);
 
 			email.setStatus(ENotificationStatus.SUCCEED);
 			updateNotification(email);
