@@ -13,6 +13,7 @@ import tm.domain.User;
 import tm.enums.ReservationStatus;
 import tm.repository.AppointmentRepository;
 import tm.repository.ReservationRepository;
+import tm.service.Notification;
 import tm.service.ReservationService;
 
 @Service
@@ -24,6 +25,9 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	AppointmentRepository appointmentRepository;
+
+	@Autowired
+	Notification notif;
 
 	@Override
 	public Reservation findById(int reservationId) {
@@ -38,10 +42,12 @@ public class ReservationServiceImpl implements ReservationService {
 		for (Reservation reser : lstReservation) {
 			if (reser.getId() != reservation.getId()) {
 				reser.setStatus(ReservationStatus.DECLINED);
+				notif.insertNotification(reser);
 				reservationRepository.save(reser);
 			}
 		}
 		reservation.setStatus(ReservationStatus.ACCEPTED);
+		notif.insertNotification(reservation);
 
 		return reservationRepository.save(reservation);
 

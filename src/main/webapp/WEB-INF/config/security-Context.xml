@@ -13,6 +13,18 @@
 		pre-post-annotations="enabled" />
 	<security:http use-expressions="true">
 
+		<security:intercept-url pattern="/appointments/add" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
+		<security:intercept-url pattern="/appointments" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
+		<security:intercept-url pattern="/appointments/getreservations" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
+
+		<security:intercept-url pattern="/reservations" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
+		<security:intercept-url pattern="/reservations/byAppointmentId/{id}" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
+
+		<security:intercept-url pattern="/reservations/makereservation/{id}" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
+		<security:intercept-url pattern="/reservations/acceptreservation/{id}" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
+		<security:intercept-url pattern="/reservations/deletereservation/{id}" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
+		
+		<!-- -->
 		<security:form-login login-page="/login"
 			default-target-url="/appointments" always-use-default-target="true"
 			authentication-failure-url="/loginfailed" />

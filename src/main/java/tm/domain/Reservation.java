@@ -30,7 +30,7 @@ public class Reservation {
 	@ManyToOne
 	private User consumer;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Appointment appointment;
 
 	@Transient
