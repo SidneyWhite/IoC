@@ -44,7 +44,7 @@
 									<input class=" form:input-large form-control" placeholder="Password"
 										name='password' type="password" value="" required="required">
 								</div>
-								<div class="form-group">
+								<div class="form-group" style="display:none">
 									<input type='checkbox' name="keepMe" /> Remember Me <br />
 								</div>
 								<input class="btn btn-lg btn-primary btn-mini" type="submit"
