@@ -4,6 +4,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +14,22 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body style="margin-left: 10px">
+	<security:authorize access="isAuthenticated()">
+         Welcome  
+         ${currentUserId } - <security:authentication
+			property="principal.username" />
+
+		<spring:url value="/dologout" var="logout_url" />
+		<form:form action="${logout_url}" class="form-horizontal"
+			method="POST">
+			<div class="form-group">
+				<div class="col-lg-offset-2 col-lg-10">
+					<input type="submit" id="logout"
+						class="btn btn-danger btn-mini  pull-right" value="Logout" />
+				</div>
+			</div>
+		</form:form>
+	</security:authorize>
 	<h1>Reservation list</h1>
 
 	<div class="container">
@@ -21,6 +38,7 @@
 				<tr>
 					<td>Reservation id</td>
 					<td>Appointment id</td>
+					<td>Consumer</td>
 					<td>Date</td>
 					<td>Room no</td>
 					<td>Status</td>
@@ -32,22 +50,23 @@
 					<tr>
 						<td>${reservation.id}</td>
 						<td>${reservation.appointment.id}</td>
+						<td>${reservation.consumer.id}-
+							${reservation.consumer.firstName}
+							${reservation.consumer.lastName}</td>
 						<td>${reservation.appointment.date}</td>
 						<td>${reservation.appointment.room_no}</td>
 						<td>${reservation.status}</td>
-						<td>
-					    <c:if test = "${reservation.status == 'PENDING'}">
-							<security:authorize access="hasRole('ROLE_CHECKER')">
-								<button class="btn btn-info" type="button"
-									value="${reservation.id}" onClick="acceptReservation(this)">accept</button>
-							</security:authorize>
-							<security:authorize access="hasRole('ROLE_STUDENT')">
-								<button class="btn btn-info" type="button"
-									value="${reservation.id}" onClick="deleteReservation(this)">delete</button>
+						<td><c:if test="${reservation.status == 'PENDING'}">
+								<security:authorize access="hasRole('ROLE_CHECKER')">
+									<button class="btn btn-info" type="button"
+										value="${reservation.id}" onClick="acceptReservation(this)">accept</button>
+								</security:authorize>
+								<security:authorize access="hasRole('ROLE_STUDENT')">
+									<button class="btn btn-info" type="button"
+										value="${reservation.id}" onClick="deleteReservation(this)">delete</button>
 
-							</security:authorize>
-					    </c:if>
-						</td>
+								</security:authorize>
+							</c:if></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -92,6 +111,7 @@
                 success: (data) => {
                     console.log(data);
                     alert("success");
+                    location.reload();
                 },
                 error: () => {
                     alert("error");

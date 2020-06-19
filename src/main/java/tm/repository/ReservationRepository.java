@@ -24,9 +24,3 @@ public interface ReservationRepository extends CrudRepository<Reservation, Integ
 	@Query(value = "SELECT * FROM RESERVATION r WHERE r.appointment_id =:appointmentId", nativeQuery = true)
 	List<Reservation> findByAppointmentId(@Param("appointmentId") Integer appointmentId);
 }
-
-//
-//public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
-//	@Query(value = "SELECT * FROM RESERVATION r WHERE r.status = 'ACCEPTED' AND (IS_REMINDER_SENT IS NULL OR IS_REMINDER_SENT = 0) AND R.RESERVATIONDATE < :reservationDate", nativeQuery = true)
-//	List<Reservation> findNewAcceptedReservations(@Param("reservationDate") Date reservationDate);
-//}

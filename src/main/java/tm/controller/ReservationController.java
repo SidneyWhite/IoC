@@ -68,8 +68,9 @@ public class ReservationController {
 	}
 
 	@RequestMapping(value = "/deletereservation/{reservationId}")
-	public void deleteReservation(@PathVariable("reservationId") int reservationId, Model model) {
+	public String deleteReservation(@PathVariable("reservationId") int reservationId, Model model) {
 		reservationService.delete(reservationId);
+		return "reservation";
 	}
 
 }
