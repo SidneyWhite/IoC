@@ -4,9 +4,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +29,6 @@ import tm.service.RoleService;
 import tm.service.impl.UserService;
 
 @Controller
-//@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -60,7 +61,19 @@ public class UserController {
 		}
 
 		userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		userService.createUser(userDto);
+		try {
+			userService.createUser(userDto);
+		} catch (Exception e) {
+
+			if (e instanceof DataIntegrityViolationException) {
+				bindingResult.reject("foo", "Duplicate username or email found!");
+			} else {
+				bindingResult.reject("foo", e.getMessage());
+			}
+			model.addAttribute("roles", getRoles());
+			return "signup";
+		}
+
 		return "redirect:/login";
 	}
 
