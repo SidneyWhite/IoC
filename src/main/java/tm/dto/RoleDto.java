@@ -1,7 +1,10 @@
 package tm.dto;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class RoleDto {
 
+	@NotEmpty
 	private String name;
 	private long id;
 

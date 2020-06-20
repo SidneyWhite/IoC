@@ -12,6 +12,7 @@
 	<security:global-method-security
 		pre-post-annotations="enabled" />
 	<security:http use-expressions="true">
+
 		<security:intercept-url pattern="/appointments/add" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
 		<security:intercept-url pattern="/appointments" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
 		<security:intercept-url pattern="/appointments/getreservations" access="hasAnyRole('ROLE_CHECKER','ROLE_STUDENT')" />
@@ -40,18 +41,6 @@
 	    <security:authentication-provider ref="authProvider" />
 	</security:authentication-manager>
 
-<!-- 	<security:authentication-manager
-		alias="authenticationManager">
-		<security:authentication-provider>
-			<security:password-encoder
-				ref="passwordEncoder" />
-			<security:jdbc-user-service
-				data-source-ref="dataSource"
-				users-by-username-query="select userName,password,enabled from user where userName=?"
-				authorities-by-username-query="select u1.userName, u2.name from user u1, role u2, user_role u3,
-				                                                     where u1.id = u3.user_id and u2.id = u3.roles_id and u1.username =?" />
-		</security:authentication-provider>
-	</security:authentication-manager> -->
 
 	<bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

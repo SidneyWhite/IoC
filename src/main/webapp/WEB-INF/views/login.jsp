@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet"
 	href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<title>Products</title>
+<title>TM Checking</title>
 </head>
 <body>
 	<section>
@@ -44,7 +44,7 @@
 									<input class=" form:input-large form-control" placeholder="Password"
 										name='password' type="password" value="" required="required">
 								</div>
-								<div class="form-group">
+								<div class="form-group" style="display:none">
 									<input type='checkbox' name="keepMe" /> Remember Me <br />
 								</div>
 								<input class="btn btn-lg btn-primary btn-mini" type="submit"
